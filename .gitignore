@@ -2,11 +2,7 @@ bin/
 obj/
 dist/
 native/
-/release/*
-!/release/AudioConverter-*-x64.zip
-!/release/AudioConverter-*-x64.zip.sha256
-# Preserve legacy FFmpeg-bundled packages locally only.
-/release/AudioConverter-1.*
+/release/
 artifacts/
 *.pfx
 vendor/ffmpeg/ffmpeg.exe

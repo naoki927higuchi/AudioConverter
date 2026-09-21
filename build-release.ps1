@@ -24,7 +24,7 @@ $cer = Join-Path $out.FullName 'AudioConverter.cer'
 Export-Certificate -Cert $cert -FilePath $cer -Force | Out-Null
 & "$sdk\signtool.exe" sign /fd SHA256 /s My /sha1 $cert.Thumbprint $package
 if ($LASTEXITCODE) { throw 'Signing failed.' }
-Copy-Item (Join-Path $PSScriptRoot 'distribution\*') $out.FullName -Force
+Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'distribution') -File | Where-Object { $_.Extension -in '.ps1','.cmd','.txt' } | Copy-Item -Destination $out.FullName -Force
 [ordered]@{
  Version = "$Version.0"; Architecture = 'x64'
  PackageSHA256 = (Get-FileHash $package -Algorithm SHA256).Hash

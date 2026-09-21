@@ -6,7 +6,7 @@ Windows 11のExplorerから、1個または複数のWAVをMP3に変換する個�
 
 ## 使い方・導入
 
-`release/AudioConverter-2.0.0-x64.zip`を別PCへ展開して`Install.cmd`を実行。
+`distribution/AudioConverter-2.0.0-x64.zip`を別PCへ展開して`Install.cmd`を実行。
 初回だけ署名用公開証明書の信頼登録に管理者承認が必要です。
 .NETは同梱。FFmpegは利用者が別途用意してください。対象はWindows 11 Intel/AMD x64。
 Windows x64版FFmpeg（libmp3lameとdynaudnormを含む）を固定フォルダーに展開し、
@@ -76,7 +76,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\verify-release.ps1 -Versio
 
 毎回ビルド・自己完結発行・MSIX作成・署名・ZIP生成を行います。
 出力: `release/AudioConverter-<version>-x64` と同名ZIP・SHA256ファイル。
-2.0.0以降の配布ZIPとSHA256をGit管理します。展開済みパッケージや旧同梱版は除外します。
+releaseはローカル出力専用です。公開時に選んだZIPとSHA256だけをdistributionへコピーしてGit管理します。
 秘密鍵・PDB・OBJ・テストファイルをMSIX/ZIPへ入れません。
 署名鍵はCurrentUser/MyのCN=AudioConverter（非エクスポート可能）。
 更新版では同じ有効な証明書を再利用。開発PC変更時は新しい証明書の信頼登録が必要です。
@@ -141,3 +141,8 @@ native検証は登録済みCOMの起動、WAV単一／複数で表示、混在�
 WAV一覧の直下の灰色の境界を上下にドラッグして一覧とログの高さを調整できます。
 ウィンドウを縦に広げた分はログに割り当てます。モニター変更時は画面内へ戻します。
 
+
+## 配布ZIPの公開運用
+
+開発中のZIPはローカル管理のみとし、公開時に選定したZIPだけをGitHubへ送ります。
+出力先・検証・公開準備の手順は [RELEASE-POLICY.md](RELEASE-POLICY.md) を参照してください。
