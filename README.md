@@ -146,3 +146,7 @@ WAV一覧の直下の灰色の境界を上下にドラッグして一覧とロ�
 
 開発中のZIPはローカル管理のみとし、公開時に選定したZIPだけをGitHubへ送ります。
 出力先・検証・公開準備の手順は [RELEASE-POLICY.md](RELEASE-POLICY.md) を参照してください。
+
+## ソースと配布物の公開
+
+[最新バイナリー](distribution/README.md)からWindows版ZIPをダウンロードできます。ソース一式はこのリポジトリで公開しています。共同開発、Issues、Pull requestsは受け付けていません。
