@@ -18,7 +18,7 @@ $cert = [Security.Cryptography.X509Certificates.X509Certificate2]::new($certific
 if ($cert.HasPrivateKey -or $cert.Thumbprint -ne $info.CertificateThumbprint) { throw 'Invalid public certificate' }
 $zip = [IO.Compression.ZipFile]::OpenRead($package)
 try {
- foreach ($required in @('AudioConverter.exe','AudioConverterCommand.dll','Assets/Logo.png')) {
+ foreach ($required in @('AudioConverter.exe','AudioConverterCommand.dll','Assets/Logo.png','D3DCompiler_47_cor3.dll','PenImc_cor3.dll','PresentationNative_cor3.dll','vcruntime140_cor3.dll','wpfgfx_cor3.dll')) {
   if (!$zip.GetEntry($required)) { throw "Required package entry missing: $required" }
  }
  if ($info.FFmpeg.Bundled -ne $false) { throw 'FFmpeg must be external.' }

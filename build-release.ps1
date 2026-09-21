@@ -10,7 +10,7 @@ $sdk = Join-Path $sdk.FullName 'x64'
 $payload = New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot ('artifacts\payload-' + [guid]::NewGuid().ToString('N')))
 $out = New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot "release\AudioConverter-$Version-x64") -Force
 # Explicit allowlist excludes stale FFmpeg files from earlier builds.
-foreach ($name in @('AudioConverter.exe','AudioConverterCommand.dll')) { Copy-Item (Join-Path $PSScriptRoot "dist\$name") $payload.FullName }
+foreach ($name in @('AudioConverter.exe','AudioConverterCommand.dll','D3DCompiler_47_cor3.dll','PenImc_cor3.dll','PresentationNative_cor3.dll','vcruntime140_cor3.dll','wpfgfx_cor3.dll')) { Copy-Item (Join-Path $PSScriptRoot "dist\$name") $payload.FullName }
 foreach ($folder in @('Assets')) { Copy-Item (Join-Path $PSScriptRoot "dist\$folder") $payload.FullName -Recurse }
 [xml]$manifest = Get-Content (Join-Path $PSScriptRoot 'AppxManifest.xml') -Raw
 $manifest.Package.Identity.Version = "$Version.0"
