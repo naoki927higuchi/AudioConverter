@@ -1,4 +1,4 @@
-param([string]$Version = '1.0.1')
+﻿param([string]$Version = '2.0.0')
 $ErrorActionPreference = 'Stop'
 foreach ($file in (Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'distribution') -Filter '*.ps1')) {
  $tokens = $null; $errors = $null
@@ -18,13 +18,11 @@ $cert = [Security.Cryptography.X509Certificates.X509Certificate2]::new($certific
 if ($cert.HasPrivateKey -or $cert.Thumbprint -ne $info.CertificateThumbprint) { throw 'Invalid public certificate' }
 $zip = [IO.Compression.ZipFile]::OpenRead($package)
 try {
- foreach ($required in @('AudioConverter.exe','AudioConverterCommand.dll','Assets/Logo.png','ffmpeg/ffmpeg.exe','ffmpeg/LICENSE.txt','ffmpeg/NOTICE.txt','ffmpeg/build-info.json','ffmpeg/UPSTREAM-README.txt')) {
+ foreach ($required in @('AudioConverter.exe','AudioConverterCommand.dll','Assets/Logo.png')) {
   if (!$zip.GetEntry($required)) { throw "Required package entry missing: $required" }
  }
- $binaryStream = $zip.GetEntry('ffmpeg/ffmpeg.exe').Open()
- $binaryHasher = [Security.Cryptography.SHA256]::Create()
- try { $binaryHash = [BitConverter]::ToString($binaryHasher.ComputeHash($binaryStream)).Replace('-','') } finally { $binaryStream.Dispose(); $binaryHasher.Dispose() }
- if ($binaryHash -ne $info.FFmpeg.SHA256) { throw 'Packaged FFmpeg hash mismatch' }
+ if ($info.FFmpeg.Bundled -ne $false) { throw 'FFmpeg must be external.' }
+ if ($zip.Entries.FullName -match '(?i)(^|/)(ffmpeg|ffprobe|ffplay)(/|\.|$)|(^|/)av(codec|format|util).*\.dll$') { throw 'Unexpected bundled FFmpeg component.' }
  $manifestReader = [IO.StreamReader]::new($zip.GetEntry('AppxManifest.xml').Open())
  try { [xml]$manifest = $manifestReader.ReadToEnd() } finally { $manifestReader.Dispose() }
  if ($manifest.Package.Identity.Name -ne 'Local.AudioConverter' -or $manifest.Package.Identity.Version -ne $info.Version) { throw 'Package identity mismatch' }

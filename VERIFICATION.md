@@ -1,3 +1,15 @@
+# 2.0.0 検証 — 2026-09-22 (JST)
+
+- build-release.ps1: C++/.NETビルド、自己完結MSIX、既存証明書での署名、ZIP生成成功。
+- ZIP: 63,045,366 bytes。FFmpegバイナリを同梱していない。
+- verify-release.ps1: 公開証明書・署名・全MSIXブロック・ZIP内容ハッシュ・版数の検証成功。
+- 実変換テスト: 33 assertions passed。外部FFmpegのPATH検出、未導入時の案内、音声変換、元データ保護を確認。
+- 旧1.0.1 ZIPと展開済み配布物をGit管理外へ移動し、ハッシュ一致を確認。旧Git履歴もbundleで保管。
+- 今回はアプリのインストールや証明書信頼設定を変更していない。2台目PCの実導入は未実施。
+
+---
+以下は旧同梱版の検証記録です。
+
 # 検証結果 — 2026-09-18
 
 環境: Windows 11 build 26200 / x64、.NET SDK 9.0.305、Visual Studio 2022 C++、Windows SDK 10.0.26100.0。

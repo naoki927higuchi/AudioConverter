@@ -1,6 +1,6 @@
-AudioConverter 1.0.1 — WAV → MP3
+AudioConverter 2.0.0 — WAV → MP3
 
-対象: Windows 11 / Intel・AMD x64。.NETとFFmpegの別途導入・PATH設定は不要です。
+対象: Windows 11 / Intel・AMD x64。.NETは同梱。FFmpegは利用者が別途導入してください。
 同じ利用者の所有PC間での個人利用を想定しています。
 
 導入
@@ -11,7 +11,7 @@ AudioConverter 1.0.1 — WAV → MP3
 4. WAVを1個または複数選び、右クリックの「MP3に変換」を選びます。
    メニューが反映されない場合はサインアウトして再サインインしてください。
 インストール後は展開した配布フォルダを移動・削除できます。
-MSIX内のアプリとFFmpegはWindowsが管理する場所に配置されます。
+MSIX内のアプリはWindowsが管理する場所に配置されます。FFmpegは含みません。
 
 使い方
 スタートメニューのAudioConverterから直接起動できます。
@@ -57,11 +57,16 @@ package-info.jsonのCertificateThumbprintとの一致を確認してください
 証明書期限はpackage-info.jsonを参照。期限後の新規導入には再署名が必要です。
 開発用登録が存在する場合はinstall-modern.ps1 -Uninstallで解除後に導入します。
 
-FFmpeg
-Gyan.dev 9.0.1 full static build / GPLv3-or-laterを無改変で同梱。
-FFmpeg-LICENSE.txtとFFmpeg-NOTICE.txtを参照してください。
-同一利用者のPC間の私的利用を対象とし、第三者向け再配布用の
-完全な対応ソース一式は本ZIPには含めていません。
+FFmpegの準備（変換前に必要）
+1. https://ffmpeg.org/download.html からWindows x64版の入手先を確認します。
+   libmp3lameとdynaudnormを含むビルドを用意してください。
+2. 任意の固定フォルダーに展開します（例: C:\Tools\ffmpeg）。
+3. ffmpeg.exeのあるbinフォルダーをユーザー環境変数PATHへ追加します。
+4. Windowsからサインアウト・再ログインします。
+5. 端末で ffmpeg -version を実行できることを確認します。
+MSIXのインストール先へのコピーは不要です。自動取得は行いません。
+未導入でもアプリはインストールできますが、変換はできません。
+旧版から更新する場合も準備が必要です。FFmpegの更新・削除は利用者が行います。
 
 画面位置・サイズ・最大化状態とWAV一覧の高さを次回起動時に復元します。
 WAV一覧の直下の灰色の境界を上下にドラッグして一覧とログの高さを調整できます。

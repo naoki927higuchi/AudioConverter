@@ -20,7 +20,7 @@ public sealed class Converter(string ffmpeg)
             var path = Path.Combine(folder.Trim('"'), "ffmpeg.exe");
             if (File.Exists(path)) return path;
         }
-        throw new FileNotFoundException("FFmpegが見つかりません。配布物を再展開するか、開発時はPATHにffmpeg.exeを追加してください。");
+        throw new FileNotFoundException("FFmpegが見つかりません。FFmpegは別途導入が必要です。ffmpeg.exeのあるbinフォルダーをユーザーのPATHに追加し、Windowsからサインアウトして再ログインしてください。");
     }
 
     public static List<string> BuildArguments(string input, string output, Settings settings)

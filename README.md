@@ -6,9 +6,13 @@ Windows 11のExplorerから、1個または複数のWAVをMP3に変換する個�
 
 ## 使い方・導入
 
-`release/AudioConverter-1.0.1-x64.zip`を別PCへ展開して`Install.cmd`を実行。
+`release/AudioConverter-2.0.0-x64.zip`を別PCへ展開して`Install.cmd`を実行。
 初回だけ署名用公開証明書の信頼登録に管理者承認が必要です。
-.NET、FFmpeg、PATH設定は不要です。対象はWindows 11 Intel/AMD x64。
+.NETは同梱。FFmpegは利用者が別途用意してください。対象はWindows 11 Intel/AMD x64。
+Windows x64版FFmpeg（libmp3lameとdynaudnormを含む）を固定フォルダーに展開し、
+ffmpeg.exeのあるbinフォルダーをユーザー環境変数PATHへ追加します。
+サインアウト・再ログイン後、端末で `ffmpeg -version` を確認してください。
+MSIXのインストール先へのコピーは不要です。旧版からの更新時も準備が必要です。
 WAVを複数選択してモダン右クリックメニューの「MP3に変換」を選ぶと、
 ひとつの設定画面に全選択ファイルを投入します。
 反映されない場合はサインアウト・サインインしてください。
@@ -54,26 +58,25 @@ VSはvswhere、SDKはインストール済みパスから検出します。
 
 ```powershell
 dotnet build .\AudioConverter.sln -c Release
-.\prepare-ffmpeg.ps1 -FFmpegRoot 'C:\path\ffmpeg-9.0.1-full_build'
 .\publish-modern.ps1
 .\dist\AudioConverter.exe
 ```
 
-FFmpegは同梱`ffmpeg/ffmpeg.exe`→EXE隣接→PATHの順で探索します。
-開発時はPATH版も利用可能。初回準備済みの本作業フォルダではprepareの再実行は不要。
-FFmpegを新たに準備する場合、[Gyan.dev](https://www.gyan.dev/ffmpeg/builds/)の
-9.0.1 full buildを展開してprepareスクリプトへ渡します。EXEのSHA256を検証します。
-更新時はビルドのライセンスと構成を確認し、vendor/ffmpegの記録も更新してください。
+FFmpegは実行ファイル配下の `ffmpeg/ffmpeg.exe`、EXE隣接、PATHの順に検索します。
+配布版はFFmpegを含めないため、通常は利用者がPATHに登録したものを使用します。
+ビルド・梱包にFFmpegは不要です。変換テストには外部FFmpegを指定します。
+`prepare-ffmpeg.ps1` と `vendor/ffmpeg` は旧版の開発・検証用資料です。
 
 ## リリース作成
 
 ```powershell
-.\build-release.ps1 -Version 1.0.1
-powershell -NoProfile -ExecutionPolicy Bypass -File .\verify-release.ps1 -Version 1.0.1
+.\build-release.ps1 -Version 2.0.0
+powershell -NoProfile -ExecutionPolicy Bypass -File .\verify-release.ps1 -Version 2.0.0
 ```
 
-毎回ビルド・自己完結発行・FFmpeg同梱・MSIX作成・署名・ZIP生成を行います。
-出力: `release/AudioConverter-<version>-x64` と同名ZIP。
+毎回ビルド・自己完結発行・MSIX作成・署名・ZIP生成を行います。
+出力: `release/AudioConverter-<version>-x64` と同名ZIP・SHA256ファイル。
+2.0.0以降の配布ZIPとSHA256をGit管理します。展開済みパッケージや旧同梱版は除外します。
 秘密鍵・PDB・OBJ・テストファイルをMSIX/ZIPへ入れません。
 署名鍵はCurrentUser/MyのCN=AudioConverter（非エクスポート可能）。
 更新版では同じ有効な証明書を再利用。開発PC変更時は新しい証明書の信頼登録が必要です。
@@ -110,21 +113,14 @@ MSIX版は通常Windowsのファイル仮想化により
 入力一覧は保存しません。破損JSONは警告を表示し初期値を使います。
 MSIX削除でパッケージ側の設定が消えることがあります。
 
-## FFmpegのライセンス
+## FFmpegについて
 
-Gyan.devの9.0.1 full static GPLv3-or-later版を外部プロセスとして無改変で使用。
-libmp3lameが有効で、nonfree構成ではないことを確認しました。
-ライセンス本文・上流README・バージョン／SHA256／ソース参照を同梱しています。
-今回の完成物は同じ利用者が自分のPCへコピーする私的利用のためのものです。
-第三者へ配布する場合の完全な対応ソース（依存ライブラリやビルドスクリプトを含む）
-一式は本ZIPに含めていません。その用途に広げる場合は別途GPLの提供条件を満たす必要があります。
+2.0.0以降の配布ZIP/MSIXにはFFmpegを含めません。
+利用者自身で入手・導入し、入手したビルドの利用条件を確認してください。
+公式の入手案内: https://ffmpeg.org/download.html
 
-根拠:
-[FFmpeg license](https://ffmpeg.org/legal.html)、
-[ビルド提供元](https://www.gyan.dev/ffmpeg/builds/)、
-[GNU private-use FAQ](https://www.gnu.org/licenses/gpl-faq.html#GPLRequireSourcePostedPublic)、
-[Microsoft Explorer統合](https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/integrate-packaged-app-with-file-explorer)、
-[dynaudnorm](https://ffmpeg.org/ffmpeg-filters.html#dynaudnorm)。
+旧1.0.1同梱版はGit管理外の
+`W:\dev\local-archives\AudioConverter\1.0.1-ffmpeg-bundled` に保管しています。
 
 ## 検証
 

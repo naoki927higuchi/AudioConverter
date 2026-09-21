@@ -8,6 +8,19 @@ Directory.CreateDirectory(root);
 var converter = new Converter(ffmpeg);
 int assertions = 0;
 void Check(bool test, string name) { if (!test) throw new Exception(name); assertions++; Console.WriteLine("PASS " + name); }
+// Exercise the public package's external-FFmpeg setup without changing user settings.
+var savedPath = Environment.GetEnvironmentVariable("PATH");
+try
+{
+    Environment.SetEnvironmentVariable("PATH", "");
+    bool missingExplained = false;
+    try { Converter.FindFFmpeg(); }
+    catch (FileNotFoundException ex) { missingExplained = ex.Message.Contains("PATH") && ex.Message.Contains("別途導入"); }
+    Check(missingExplained, "missing external FFmpeg explains installation and PATH");
+    Environment.SetEnvironmentVariable("PATH", Path.GetDirectoryName(ffmpeg));
+    Check(Path.GetFullPath(Converter.FindFFmpeg()) == ffmpeg, "find user-provided FFmpeg on PATH");
+}
+finally { Environment.SetEnvironmentVariable("PATH", savedPath); }
 async Task<string> FF(params string[] arguments)
 {
     var start = new ProcessStartInfo(ffmpeg) { RedirectStandardError = true, RedirectStandardOutput = true, UseShellExecute = false, CreateNoWindow = true };
