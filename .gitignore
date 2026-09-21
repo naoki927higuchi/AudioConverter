@@ -1,0 +1,13 @@
+bin/
+obj/
+dist/
+native/
+release/
+artifacts/
+*.pfx
+vendor/ffmpeg/ffmpeg.exe
+
+/output/
+/tmp/
+.vs/
+*.user

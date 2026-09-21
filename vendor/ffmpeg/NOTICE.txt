@@ -1,0 +1,25 @@
+FFmpeg 9.0.1-full_build-www.gyan.dev
+Copyright (c) 2000-2026 the FFmpeg developers
+Windows static build supplied by Gyan Doshi: https://www.gyan.dev/ffmpeg/builds/
+License: GNU General Public License version 3 or later (GPL-3.0-or-later).
+The complete upstream GPL text is included in LICENSE.txt / FFmpeg-LICENSE.txt.
+The original build configuration and attribution are in UPSTREAM-README.txt.
+FFmpeg is executed as a separate, unmodified command-line program.
+No --enable-nonfree option appears in this build configuration.
+Source revision supplied by the build provider:
+https://github.com/FFmpeg/FFmpeg/commit/bf1b838f2a
+License reference: https://ffmpeg.org/legal.html
+GPL private-use reference: https://www.gnu.org/licenses/gpl-faq.html#GPLRequireSourcePostedPublic
+
+This release is prepared for the requested private use, including copying to
+another PC owned by the same user. It is not a public/third-party distribution.
+Private use does not require publishing modified application source.
+If later conveying this package to other people, the GPL's corresponding-source
+obligations must be fulfilled for the exact FFmpeg binary, including enabled
+third-party libraries and build scripts. A link to FFmpeg alone is insufficient.
+Obtain and provide the complete corresponding source before such distribution.
+This package does not claim to include that complete source bundle.
+
+本パッケージは同一利用者の所有PC間での私的利用・コピーを対象にしています。
+第三者への配布を開始する場合は、当該FFmpegバイナリと依存ライブラリの
+完全な対応ソース・ビルド手順の提供条件を別途満たしてください。

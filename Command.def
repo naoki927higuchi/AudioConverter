@@ -1,0 +1,4 @@
+LIBRARY AudioConverterCommand
+EXPORTS
+ DllGetClassObject PRIVATE
+ DllCanUnloadNow PRIVATE

@@ -1,0 +1,8 @@
+{
+  "Version": "9.0.1-full_build-www.gyan.dev",
+  "License": "GPL-3.0-or-later",
+  "SHA256": "57C56E369D5B4873B4D93FC1A1D833CB7CD8BC9325C14B05C34CE60B22842D8A",
+  "BuildProvider": "https://www.gyan.dev/ffmpeg/builds/",
+  "Source": "https://github.com/FFmpeg/FFmpeg/commit/bf1b838f2a",
+  "UsageScope": "Private use and copying between computers owned by the same user. Not prepared for third-party redistribution."
+}
